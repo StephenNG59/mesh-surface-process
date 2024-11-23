@@ -1,0 +1,15 @@
+[submodule "deps/polyscope"]
+	path = deps/polyscope
+	url = https://github.com/nmwsharp/polyscope.git
+[submodule "deps/geometry-central"]
+	path = deps/geometry-central
+	url = https://github.com/nmwsharp/geometry-central.git
+[submodule "deps/spectra"]
+	path = deps/spectra
+	url = https://github.com/yixuan/spectra.git
+[submodule "deps/vcglib"]
+	path = deps/vcglib
+	url = https://github.com/cnr-isti-vclab/vcglib.git
+[submodule "deps/libigl"]
+	path = deps/libigl
+	url = https://github.com/libigl/libigl.git
