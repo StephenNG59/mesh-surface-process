@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.10.0)
 project(mesh-surface-process)
 
 ### Set C++ standard (global)
-# set(CMAKE_CXX_STANDARD 20)
-# set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 ### Configure output locations
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -79,9 +79,136 @@ add_subdirectory(deps/libigl)
 set(SRCS_00
     deps/vcglib/wrap/ply/plylib.cpp
     src/00_Playground.cpp
+    src/mesh_processor.cpp
 )
 add_executable(00_Playground "${SRCS_00}")
+target_include_directories(00_Playground PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_include_directories(00_Playground PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/vcglib")
 target_include_directories(00_Playground PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/libigl/include")
 target_include_directories(00_Playground PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/spectra/include")
 target_link_libraries(00_Playground geometry-central polyscope igl::core)
+
+
+# 01_Gradient
+set(SRCS_01
+    src/01_Gradient.cpp
+)
+add_executable(01_Gradient "${SRCS_01}")
+target_link_libraries(01_Gradient geometry-central polyscope)
+
+
+# 02_Mapping
+set(SRCS_02
+    deps/vcglib/wrap/ply/plylib.cpp
+    src/02_Mapping.cpp
+)
+add_executable(02_Mapping "${SRCS_02}")
+target_include_directories(02_Mapping PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/vcglib")
+target_link_libraries(02_Mapping geometry-central polyscope)
+
+
+# 03_DataPrepare
+set(SRCS_03
+    deps/vcglib/wrap/ply/plylib.cpp
+    src/03_DataPrepare.cpp
+)
+add_executable(03_DataPrepare "${SRCS_03}")
+target_include_directories(03_DataPrepare PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(03_DataPrepare PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/vcglib")
+target_link_libraries(03_DataPrepare geometry-central polyscope)
+
+
+# 04_MICCAI (visualize)
+set(SRCS_04
+    deps/vcglib/wrap/ply/plylib.cpp
+    src/04_MICCAI.cpp
+)
+add_executable(04_MICCAI "${SRCS_04}")
+target_include_directories(04_MICCAI PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(04_MICCAI PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/vcglib")
+target_link_libraries(04_MICCAI geometry-central polyscope)
+
+# 05_MICCAIPrepare
+set(SRCS_05
+    deps/vcglib/wrap/ply/plylib.cpp
+    src/05_MICCAIPrepare.cpp
+)
+add_executable(05_MICCAIPrepare "${SRCS_05}")
+target_include_directories(05_MICCAIPrepare PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(05_MICCAIPrepare PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/vcglib")
+target_link_libraries(05_MICCAIPrepare geometry-central polyscope)
+
+# A1_MeshCleaner
+set(SRCS_A1
+    #deps/vcglib/wrap/ply/plylib.cpp
+    src/A1_MeshCleaner.cpp
+)
+add_executable(A1_MeshCleaner "${SRCS_A1}")
+target_include_directories(A1_MeshCleaner PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(A1_MeshCleaner PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/vcglib")
+target_include_directories(A1_MeshCleaner PUBLIC "${GC_EIGEN_LOCATION}")
+#target_link_libraries(A1_MeshCleaner )
+
+# A3_MeshMapper
+set(SRCS_A3
+    src/A3_MeshMapper.cpp
+)
+add_executable(A3_MeshMapper "${SRCS_A3}")
+target_include_directories(A3_MeshMapper PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(A3_MeshMapper PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/libigl/include")
+target_include_directories(A3_MeshMapper PUBLIC "${GC_EIGEN_LOCATION}")
+target_include_directories(A3_MeshMapper PUBLIC "${MY_CNPY_DIR}/include") #cnpy.h zlib.h zconf.h
+target_include_directories(A3_MeshMapper PUBLIC "${MY_ZLIB_DIR}/include")
+target_link_directories(A3_MeshMapper PUBLIC "${MY_CNPY_DIR}/lib") #cnpy.lib cnpy.dll
+target_link_directories(A3_MeshMapper PUBLIC "${MY_ZLIB_DIR}/lib")
+target_link_libraries(A3_MeshMapper igl::core cnpy zlib)
+
+# A4_ImageExtractor
+set(SRCS_A4
+    src/A4_ImageExtractor.cpp
+)
+add_executable(A4_ImageExtractor "${SRCS_A4}")
+target_include_directories(A4_ImageExtractor PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(A4_ImageExtractor PUBLIC "${GC_EIGEN_LOCATION}")
+target_include_directories(A4_ImageExtractor PUBLIC "${MY_CNPY_DIR}/include")
+target_include_directories(A4_ImageExtractor PUBLIC "${MY_ZLIB_DIR}/include")
+target_link_directories(A4_ImageExtractor PUBLIC "${MY_CNPY_DIR}/lib")
+target_link_directories(A4_ImageExtractor PUBLIC "${MY_ZLIB_DIR}/lib")
+target_link_libraries(A4_ImageExtractor cnpy zlib)
+
+# A5_SingleToothExtractor
+set(SRCS_A5
+    src/A5_SingleToothExtractor.cpp
+)
+add_executable(A5_SingleToothExtractor "${SRCS_A5}")
+target_include_directories(A5_SingleToothExtractor PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(A5_SingleToothExtractor PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/libigl/include")
+target_include_directories(A5_SingleToothExtractor PUBLIC "${GC_EIGEN_LOCATION}")
+target_include_directories(A5_SingleToothExtractor PUBLIC "${MY_CNPY_DIR}/include")
+target_include_directories(A5_SingleToothExtractor PUBLIC "${MY_ZLIB_DIR}/include")
+target_link_directories(A5_SingleToothExtractor PUBLIC "${MY_CNPY_DIR}/lib")
+target_link_directories(A5_SingleToothExtractor PUBLIC "${MY_ZLIB_DIR}/lib")
+target_link_libraries(A5_SingleToothExtractor igl::core cnpy zlib)
+
+# E1_RemapUV
+set(SRCS_E1
+    src/E1_RemapUV.cpp
+)
+add_executable(E1_RemapUV "${SRCS_E1}")
+target_include_directories(E1_RemapUV PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(E1_RemapUV PUBLIC "${MY_CNPY_DIR}/include")
+target_include_directories(E1_RemapUV PUBLIC "${MY_ZLIB_DIR}/include")
+target_link_directories(E1_RemapUV PUBLIC "${MY_CNPY_DIR}/lib")
+target_link_directories(E1_RemapUV PUBLIC "${MY_ZLIB_DIR}/lib")
+target_link_libraries(E1_RemapUV geometry-central polyscope cnpy zlib)
+
+# test
+#find_package(ZLIB REQUIRED)
+add_executable(TestProgram "src/test.cpp")
+target_include_directories(TestProgram PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/deps/libigl/include")
+target_include_directories(TestProgram PUBLIC "${GC_EIGEN_LOCATION}")
+target_include_directories(TestProgram PUBLIC "${MY_CNPY_DIR}/include")
+target_include_directories(TestProgram PUBLIC "${MY_ZLIB_DIR}/include")
+target_link_directories(TestProgram PUBLIC "${MY_CNPY_DIR}/lib")
+target_link_directories(TestProgram PUBLIC "${MY_ZLIB_DIR}/lib")
+target_link_libraries(TestProgram igl::core cnpy zlib)
